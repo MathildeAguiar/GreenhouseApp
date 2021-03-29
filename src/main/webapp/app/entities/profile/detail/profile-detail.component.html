@@ -1,0 +1,77 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="profile">
+      <h2 data-cy="profileDetailsHeading"><span jhiTranslate="greenhouseApp.profile.detail.title">Profile</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ profile.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.name">Name</span></dt>
+        <dd>
+          <span>{{ profile.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'greenhouseApp.Category.' + profile.status }}">{{ profile.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.specialite">Specialite</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'greenhouseApp.Filiere.' + profile.specialite }}">{{ profile.specialite }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.address">Address</span></dt>
+        <dd>
+          <span>{{ profile.address }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.codeP">Code P</span></dt>
+        <dd>
+          <span>{{ profile.codeP }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.ville">Ville</span></dt>
+        <dd>
+          <span>{{ profile.ville }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ profile.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.email">Email</span></dt>
+        <dd>
+          <span>{{ profile.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.indicatif">Indicatif</span></dt>
+        <dd>
+          <div *ngIf="profile.indicatif">
+            <a (click)="openFile(profile.indicatif, profile.indicatifContentType)">
+              <img
+                [src]="'data:' + profile.indicatifContentType + ';base64,' + profile.indicatif"
+                style="max-width: 100%"
+                alt="profile image"
+              />
+            </a>
+            {{ profile.indicatifContentType }}, {{ byteSize(profile.indicatif) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.profile.user">User</span></dt>
+        <dd>
+          <span>{{ profile.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/profile', profile.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

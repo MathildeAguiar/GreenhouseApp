@@ -1,0 +1,32 @@
+{
+  "name": "Alert",
+  "fields": [
+    {
+      "fieldName": "level",
+      "fieldType": "AlertLevel",
+      "fieldValues": "INFO,WARNING,CRITICAL",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modifiedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "alert",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Greenhouse"],
+  "changelogDate": "20210329132634"
+}

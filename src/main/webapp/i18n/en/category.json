@@ -1,0 +1,9 @@
+{
+  "greenhouseApp": {
+    "Category": {
+      "null": "",
+      "ENSEIGNANT": "ENSEIGNANT",
+      "ETUDIANT": "ETUDIANT"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+<div>
+  <h2 id="page-heading" data-cy="ReportHeading">
+    <span jhiTranslate="greenhouseApp.report.home.title">Reports</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="greenhouseApp.report.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-report"
+        [routerLink]="['/report/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="greenhouseApp.report.home.createLabel"> Create a new Report </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="reports?.length === 0">
+    <span jhiTranslate="greenhouseApp.report.home.notFound">No reports found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="reports && reports.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="titleR">
+            <span jhiTranslate="greenhouseApp.report.titleR">Title R</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="alerts">
+            <span jhiTranslate="greenhouseApp.report.alerts">Alerts</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="descript">
+            <span jhiTranslate="greenhouseApp.report.descript">Descript</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdAt">
+            <span jhiTranslate="greenhouseApp.report.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="modifiedAt">
+            <span jhiTranslate="greenhouseApp.report.modifiedAt">Modified At</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="langue">
+            <span jhiTranslate="greenhouseApp.report.langue">Langue</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="author.name">
+            <span jhiTranslate="greenhouseApp.report.author">Author</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="house.nameG">
+            <span jhiTranslate="greenhouseApp.report.house">House</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let report of reports; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/report', report.id, 'view']">{{ report.id }}</a>
+          </td>
+          <td>{{ report.titleR }}</td>
+          <td>{{ report.alerts }}</td>
+          <td>{{ report.descript }}</td>
+          <td>{{ report.createdAt | formatMediumDatetime }}</td>
+          <td>{{ report.modifiedAt | formatMediumDatetime }}</td>
+          <td jhiTranslate="{{ 'greenhouseApp.Language.' + report.langue }}">{{ report.langue }}</td>
+          <td>
+            <div *ngIf="report.author">
+              <a [routerLink]="['/profile', report.author?.id, 'view']">{{ report.author?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="report.house">
+              <a [routerLink]="['/green-house', report.house?.id, 'view']">{{ report.house?.nameG }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/report', report.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/report', report.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(report)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
