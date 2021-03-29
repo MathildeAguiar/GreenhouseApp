@@ -1,0 +1,65 @@
+{
+  "name": "Report",
+  "fields": [
+    {
+      "fieldName": "titleR",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "alerts",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descript",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modifiedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "langue",
+      "fieldType": "Language",
+      "fieldValues": "FRENCH,ENGLISH,SPANISH"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "task",
+      "otherEntityRelationshipName": "rapport",
+      "relationshipName": "task"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "profile",
+      "otherEntityRelationshipName": "document",
+      "relationshipName": "author",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "greenHouse",
+      "otherEntityRelationshipName": "report",
+      "relationshipName": "house",
+      "otherEntityField": "nameG"
+    }
+  ],
+  "entityTableName": "report",
+  "dto": "mapstruct",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Greenhouse"],
+  "changelogDate": "20210329132635"
+}

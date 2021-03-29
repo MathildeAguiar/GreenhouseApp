@@ -1,0 +1,147 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-report-heading" data-cy="ReportCreateUpdateHeading" jhiTranslate="greenhouseApp.report.home.createOrEditLabel">
+        Create or edit a Report
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.report.titleR" for="field_titleR">Title R</label>
+          <input type="text" class="form-control" name="titleR" id="field_titleR" data-cy="titleR" formControlName="titleR" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.report.alerts" for="field_alerts">Alerts</label>
+          <input type="text" class="form-control" name="alerts" id="field_alerts" data-cy="alerts" formControlName="alerts" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.report.descript" for="field_descript">Descript</label>
+          <textarea class="form-control" name="descript" id="field_descript" data-cy="descript" formControlName="descript"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.report.createdAt" for="field_createdAt">Created At</label>
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('createdAt')!.invalid && (editForm.get('createdAt')!.dirty || editForm.get('createdAt')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('createdAt')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('createdAt')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.report.modifiedAt" for="field_modifiedAt">Modified At</label>
+          <div class="d-flex">
+            <input
+              id="field_modifiedAt"
+              data-cy="modifiedAt"
+              type="datetime-local"
+              class="form-control"
+              name="modifiedAt"
+              formControlName="modifiedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('modifiedAt')!.invalid && (editForm.get('modifiedAt')!.dirty || editForm.get('modifiedAt')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('modifiedAt')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('modifiedAt')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.report.langue" for="field_langue">Langue</label>
+          <select class="form-control" name="langue" formControlName="langue" id="field_langue" data-cy="langue">
+            <option [ngValue]="null">{{ 'greenhouseApp.Language.null' | translate }}</option>
+            <option value="FRENCH">{{ 'greenhouseApp.Language.FRENCH' | translate }}</option>
+            <option value="ENGLISH">{{ 'greenhouseApp.Language.ENGLISH' | translate }}</option>
+            <option value="SPANISH">{{ 'greenhouseApp.Language.SPANISH' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.report.author" for="field_author">Author</label>
+          <select class="form-control" id="field_author" data-cy="author" name="author" formControlName="author">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="profileOption.id === editForm.get('author')!.value?.id ? editForm.get('author')!.value : profileOption"
+              *ngFor="let profileOption of profilesSharedCollection; trackBy: trackProfileById"
+            >
+              {{ profileOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.report.house" for="field_house">House</label>
+          <select class="form-control" id="field_house" data-cy="house" name="house" formControlName="house">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="greenHouseOption.id === editForm.get('house')!.value?.id ? editForm.get('house')!.value : greenHouseOption"
+              *ngFor="let greenHouseOption of greenHousesSharedCollection; trackBy: trackGreenHouseById"
+            >
+              {{ greenHouseOption.nameG }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

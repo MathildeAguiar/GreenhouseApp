@@ -1,0 +1,10 @@
+{
+  "greenhouseApp": {
+    "AlertLevel": {
+      "null": "",
+      "INFO": "INFO",
+      "WARNING": "WARNING",
+      "CRITICAL": "CRITICAL"
+    }
+  }
+}
