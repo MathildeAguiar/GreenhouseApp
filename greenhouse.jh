@@ -1,0 +1,99 @@
+
+application {
+  config {
+    baseName Greenhouse,
+    applicationType monolith,
+    packageName fr.uga.polytech.greenhouse,
+    authenticationType jwt,
+    prodDatabaseType mysql,
+    clientFramework angularX
+  }
+  entities *
+}
+
+enum Category {
+	ENSEIGNANT, ETUDIANT
+}
+
+enum Filiere{
+  INFO, PRI, IESE, MAT, TIS, GGC, E2I
+}
+
+entity Profile {
+	name String required,
+    status Category required ,
+	specialite Filiere ,
+    
+  
+  address String minlength(3) pattern(/^[A-Z][a-z]+\d$/),
+  codeP String maxlength(7),
+  ville String minlength(10),
+  phoneNumber String minlength(7), 
+  email String pattern(/^([a-zA-Z0-9_\-\.]+)@(imag|etu.univ-grenoble-alpes|univ-grenoble-alpes+)\.fr$/), //try to fit it to imag etc
+  indicatif ImageBlob
+
+}
+
+entity GreenHouse {
+	nameG String required ,
+  latitude Float,
+  longitude Float
+}
+
+entity Task{
+
+	titleT String required,
+  description String minlength(8),
+  startTime Instant required,
+  endTime Instant,
+  createdAt Instant required
+  
+}
+
+enum AlertLevel {
+  INFO, WARNING, CRITICAL
+}
+
+entity Alert{
+  level AlertLevel required, // alert title
+  createdAt Instant required, //creation date
+  modifiedAt Instant required //modification date
+}
+
+enum Language {
+    FRENCH, ENGLISH, SPANISH
+}
+
+entity Report{
+  titleR String,
+  alerts String,
+  descript TextBlob,
+  createdAt Instant required,
+  modifiedAt Instant required,
+  langue Language 
+}
+
+
+relationship OneToMany {  
+  Profile{work} to Task{responsible(name)}
+  Profile{document} to Report{author(name)}
+  Report{task} to Task{Rapport(titleR)},
+  GreenHouse{report} to Report{house(nameG)},
+  
+  Profile{house} to GreenHouse{observateur(name)}
+}
+
+   
+relationship OneToOne {
+  Profile{user(login)} to User,
+} 
+
+  
+paginate Profile, GreenHouse, Alert with pagination
+
+paginate Report, Task with infinite-scroll
+
+dto * with mapstruct
+service * with serviceImpl
+
+filter*

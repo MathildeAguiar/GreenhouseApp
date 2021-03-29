@@ -1,0 +1,215 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-profile-heading" data-cy="ProfileCreateUpdateHeading" jhiTranslate="greenhouseApp.profile.home.createOrEditLabel">
+        Create or edit a Profile
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'greenhouseApp.Category.null' | translate }}</option>
+            <option value="ENSEIGNANT">{{ 'greenhouseApp.Category.ENSEIGNANT' | translate }}</option>
+            <option value="ETUDIANT">{{ 'greenhouseApp.Category.ETUDIANT' | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.specialite" for="field_specialite">Specialite</label>
+          <select class="form-control" name="specialite" formControlName="specialite" id="field_specialite" data-cy="specialite">
+            <option [ngValue]="null">{{ 'greenhouseApp.Filiere.null' | translate }}</option>
+            <option value="INFO">{{ 'greenhouseApp.Filiere.INFO' | translate }}</option>
+            <option value="PRI">{{ 'greenhouseApp.Filiere.PRI' | translate }}</option>
+            <option value="IESE">{{ 'greenhouseApp.Filiere.IESE' | translate }}</option>
+            <option value="MAT">{{ 'greenhouseApp.Filiere.MAT' | translate }}</option>
+            <option value="TIS">{{ 'greenhouseApp.Filiere.TIS' | translate }}</option>
+            <option value="GGC">{{ 'greenhouseApp.Filiere.GGC' | translate }}</option>
+            <option value="E2I">{{ 'greenhouseApp.Filiere.E2I' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.address" for="field_address">Address</label>
+          <input type="text" class="form-control" name="address" id="field_address" data-cy="address" formControlName="address" />
+          <div *ngIf="editForm.get('address')!.invalid && (editForm.get('address')!.dirty || editForm.get('address')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('address')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 3 }"
+            >
+              This field is required to be at least 3 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('address')?.errors?.pattern"
+              jhiTranslate="entity.validation.pattern"
+              [translateValues]="{ pattern: 'Address' }"
+            >
+              This field should follow pattern for "Address".
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.codeP" for="field_codeP">Code P</label>
+          <input type="text" class="form-control" name="codeP" id="field_codeP" data-cy="codeP" formControlName="codeP" />
+          <div *ngIf="editForm.get('codeP')!.invalid && (editForm.get('codeP')!.dirty || editForm.get('codeP')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('codeP')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 7 }"
+            >
+              This field cannot be longer than 7 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.ville" for="field_ville">Ville</label>
+          <input type="text" class="form-control" name="ville" id="field_ville" data-cy="ville" formControlName="ville" />
+          <div *ngIf="editForm.get('ville')!.invalid && (editForm.get('ville')!.dirty || editForm.get('ville')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('ville')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 10 }"
+            >
+              This field is required to be at least 10 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.phoneNumber" for="field_phoneNumber">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="phoneNumber"
+            id="field_phoneNumber"
+            data-cy="phoneNumber"
+            formControlName="phoneNumber"
+          />
+          <div *ngIf="editForm.get('phoneNumber')!.invalid && (editForm.get('phoneNumber')!.dirty || editForm.get('phoneNumber')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('phoneNumber')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 7 }"
+            >
+              This field is required to be at least 7 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('email')?.errors?.pattern"
+              jhiTranslate="entity.validation.pattern"
+              [translateValues]="{ pattern: 'Email' }"
+            >
+              This field should follow pattern for "Email".
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.indicatif" for="field_indicatif">Indicatif</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('indicatifContentType')!.value + ';base64,' + editForm.get('indicatif')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('indicatif')!.value"
+              alt="profile image"
+            />
+            <div *ngIf="editForm.get('indicatif')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left"
+                >{{ editForm.get('indicatifContentType')!.value }}, {{ byteSize(editForm.get('indicatif')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('indicatif', 'indicatifContentType', 'file_indicatif')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_indicatif"
+              data-cy="indicatif"
+              (change)="setFileData($event, 'indicatif', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="indicatif" id="field_indicatif" data-cy="indicatif" formControlName="indicatif" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="indicatifContentType"
+            id="field_indicatifContentType"
+            formControlName="indicatifContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.profile.user" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('user')!.value?.id ? editForm.get('user')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

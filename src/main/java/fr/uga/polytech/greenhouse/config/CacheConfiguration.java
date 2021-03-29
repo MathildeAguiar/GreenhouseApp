@@ -48,6 +48,16 @@ public class CacheConfiguration {
             createCache(cm, fr.uga.polytech.greenhouse.domain.User.class.getName());
             createCache(cm, fr.uga.polytech.greenhouse.domain.Authority.class.getName());
             createCache(cm, fr.uga.polytech.greenhouse.domain.User.class.getName() + ".authorities");
+            createCache(cm, fr.uga.polytech.greenhouse.domain.Profile.class.getName());
+            createCache(cm, fr.uga.polytech.greenhouse.domain.Profile.class.getName() + ".works");
+            createCache(cm, fr.uga.polytech.greenhouse.domain.Profile.class.getName() + ".documents");
+            createCache(cm, fr.uga.polytech.greenhouse.domain.Profile.class.getName() + ".houses");
+            createCache(cm, fr.uga.polytech.greenhouse.domain.GreenHouse.class.getName());
+            createCache(cm, fr.uga.polytech.greenhouse.domain.GreenHouse.class.getName() + ".reports");
+            createCache(cm, fr.uga.polytech.greenhouse.domain.Task.class.getName());
+            createCache(cm, fr.uga.polytech.greenhouse.domain.Alert.class.getName());
+            createCache(cm, fr.uga.polytech.greenhouse.domain.Report.class.getName());
+            createCache(cm, fr.uga.polytech.greenhouse.domain.Report.class.getName() + ".tasks");
             // jhipster-needle-ehcache-add-entry
         };
     }

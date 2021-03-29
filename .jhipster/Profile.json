@@ -1,0 +1,95 @@
+{
+  "name": "Profile",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Category",
+      "fieldValues": "ENSEIGNANT,ETUDIANT",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "specialite",
+      "fieldType": "Filiere",
+      "fieldValues": "INFO,PRI,IESE,MAT,TIS,GGC,E2I"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "pattern"],
+      "fieldValidateRulesMinlength": "3",
+      "fieldValidateRulesPattern": "^[A-Z][a-z]+\\d$"
+    },
+    {
+      "fieldName": "codeP",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "7"
+    },
+    {
+      "fieldName": "ville",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength"],
+      "fieldValidateRulesMinlength": "10"
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength"],
+      "fieldValidateRulesMinlength": "7"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "^([a-zA-Z0-9_\\-\\.]+)@(imag|etu.univ-grenoble-alpes|univ-grenoble-alpes+)\\.fr$"
+    },
+    {
+      "fieldName": "indicatif",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "profile",
+      "relationshipName": "user",
+      "otherEntityField": "login",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "task",
+      "otherEntityRelationshipName": "responsible",
+      "relationshipName": "work"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "report",
+      "otherEntityRelationshipName": "author",
+      "relationshipName": "document"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "greenHouse",
+      "otherEntityRelationshipName": "observateur",
+      "relationshipName": "house"
+    }
+  ],
+  "entityTableName": "profile",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Greenhouse"],
+  "changelogDate": "20210329134519"
+}
