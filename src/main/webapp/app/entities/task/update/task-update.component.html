@@ -1,0 +1,169 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-task-heading" data-cy="TaskCreateUpdateHeading" jhiTranslate="greenhouseApp.task.home.createOrEditLabel">
+        Create or edit a Task
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.task.titleT" for="field_titleT">Title T</label>
+          <input type="text" class="form-control" name="titleT" id="field_titleT" data-cy="titleT" formControlName="titleT" />
+          <div *ngIf="editForm.get('titleT')!.invalid && (editForm.get('titleT')!.dirty || editForm.get('titleT')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('titleT')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.task.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('description')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 8 }"
+            >
+              This field is required to be at least 8 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.task.startTime" for="field_startTime">Start Time</label>
+          <div class="d-flex">
+            <input
+              id="field_startTime"
+              data-cy="startTime"
+              type="datetime-local"
+              class="form-control"
+              name="startTime"
+              formControlName="startTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('startTime')!.invalid && (editForm.get('startTime')!.dirty || editForm.get('startTime')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('startTime')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('startTime')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.task.endTime" for="field_endTime">End Time</label>
+          <div class="d-flex">
+            <input
+              id="field_endTime"
+              data-cy="endTime"
+              type="datetime-local"
+              class="form-control"
+              name="endTime"
+              formControlName="endTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.task.createdAt" for="field_createdAt">Created At</label>
+          <div class="d-flex">
+            <input
+              id="field_createdAt"
+              data-cy="createdAt"
+              type="datetime-local"
+              class="form-control"
+              name="createdAt"
+              formControlName="createdAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('createdAt')!.invalid && (editForm.get('createdAt')!.dirty || editForm.get('createdAt')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('createdAt')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('createdAt')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.task.responsible" for="field_responsible">Responsible</label>
+          <select class="form-control" id="field_responsible" data-cy="responsible" name="responsible" formControlName="responsible">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="profileOption.id === editForm.get('responsible')!.value?.id ? editForm.get('responsible')!.value : profileOption"
+              *ngFor="let profileOption of profilesSharedCollection; trackBy: trackProfileById"
+            >
+              {{ profileOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.task.rapport" for="field_rapport">Rapport</label>
+          <select class="form-control" id="field_rapport" data-cy="rapport" name="rapport" formControlName="rapport">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="reportOption.id === editForm.get('rapport')!.value?.id ? editForm.get('rapport')!.value : reportOption"
+              *ngFor="let reportOption of reportsSharedCollection; trackBy: trackReportById"
+            >
+              {{ reportOption.titleR }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

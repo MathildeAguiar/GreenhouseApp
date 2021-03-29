@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-green-house-heading"
+        data-cy="GreenHouseCreateUpdateHeading"
+        jhiTranslate="greenhouseApp.greenHouse.home.createOrEditLabel"
+      >
+        Create or edit a Green House
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.greenHouse.nameG" for="field_nameG">Name G</label>
+          <input type="text" class="form-control" name="nameG" id="field_nameG" data-cy="nameG" formControlName="nameG" />
+          <div *ngIf="editForm.get('nameG')!.invalid && (editForm.get('nameG')!.dirty || editForm.get('nameG')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nameG')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.greenHouse.latitude" for="field_latitude">Latitude</label>
+          <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.greenHouse.longitude" for="field_longitude">Longitude</label>
+          <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="greenhouseApp.greenHouse.observateur" for="field_observateur">Observateur</label>
+          <select class="form-control" id="field_observateur" data-cy="observateur" name="observateur" formControlName="observateur">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="profileOption.id === editForm.get('observateur')!.value?.id ? editForm.get('observateur')!.value : profileOption"
+              *ngFor="let profileOption of profilesSharedCollection; trackBy: trackProfileById"
+            >
+              {{ profileOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

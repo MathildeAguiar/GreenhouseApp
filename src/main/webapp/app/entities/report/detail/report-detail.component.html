@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="report">
+      <h2 data-cy="reportDetailsHeading"><span jhiTranslate="greenhouseApp.report.detail.title">Report</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ report.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.report.titleR">Title R</span></dt>
+        <dd>
+          <span>{{ report.titleR }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.report.alerts">Alerts</span></dt>
+        <dd>
+          <span>{{ report.alerts }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.report.descript">Descript</span></dt>
+        <dd>
+          <span>{{ report.descript }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.report.createdAt">Created At</span></dt>
+        <dd>
+          <span>{{ report.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.report.modifiedAt">Modified At</span></dt>
+        <dd>
+          <span>{{ report.modifiedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.report.langue">Langue</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'greenhouseApp.Language.' + report.langue }}">{{ report.langue }}</span>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.report.author">Author</span></dt>
+        <dd>
+          <div *ngIf="report.author">
+            <a [routerLink]="['/profile', report.author?.id, 'view']">{{ report.author?.name }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="greenhouseApp.report.house">House</span></dt>
+        <dd>
+          <div *ngIf="report.house">
+            <a [routerLink]="['/green-house', report.house?.id, 'view']">{{ report.house?.nameG }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/report', report.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

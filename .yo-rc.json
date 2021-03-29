@@ -5,7 +5,7 @@
     "baseName": "Greenhouse",
     "packageName": "fr.uga.polytech.greenhouse",
     "packageFolder": "fr/uga/polytech/greenhouse",
-    "serverPort": 8081,
+    "serverPort": "8080",
     "serviceDiscoveryType": false,
     "authenticationType": "jwt",
     "cacheProvider": "ehcache",
@@ -23,7 +23,7 @@
     "testFrameworks": [],
     "enableTranslation": true,
     "nativeLanguage": "en",
-    "languages": ["en", "ja"],
+    "languages": ["en"],
     "clientFramework": "angularX",
     "jhiPrefix": "jhi",
     "withAdminUi": true,
@@ -42,7 +42,9 @@
     "jwtSecretKey": "MzcxZWMyMjAzNjhiMTRjY2U0ZTAwMDA3MmQ5NTNjNzNiMGNkZDRiN2M1Mjg3ZTdkMTFiZDliMTM0ZGY1OTUyOTBhMTY1OWY0YWI4NGFlNjA4YzFmOTNhN2FmNTk4OWU5YzY3YTI5NzJhM2E5MzI3NzBhYzU1MzhhZDFkYmU5YWU=",
     "clientTheme": "none",
     "clientThemeVariant": "",
-    "reactive": false
+    "reactive": false,
+    "entities": ["Profile", "GreenHouse", "Task", "Alert", "Report"],
+    "lastLiquibaseTimestamp": 1617025523000
   },
   "git-provider": "GitHub",
   "git-company": "MathildeAguiar",

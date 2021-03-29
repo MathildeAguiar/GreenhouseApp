@@ -1,0 +1,43 @@
+{
+  "name": "GreenHouse",
+  "fields": [
+    {
+      "fieldName": "nameG",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Float"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "report",
+      "otherEntityRelationshipName": "house",
+      "relationshipName": "report"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "profile",
+      "otherEntityRelationshipName": "house",
+      "relationshipName": "observateur",
+      "otherEntityField": "name"
+    }
+  ],
+  "entityTableName": "green_house",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Greenhouse"],
+  "changelogDate": "20210329134520"
+}
